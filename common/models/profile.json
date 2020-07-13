@@ -19,7 +19,7 @@
       "required": true
     },
     "birth_date": {
-      "type": "date",
+      "type": "string",
       "required": true
     },
     "age": {
@@ -27,7 +27,9 @@
       "required": true
     },
     "history": {
-      "type": ["object"]
+      "type": [
+        "object"
+      ]
     }
   },
   "validations": [],

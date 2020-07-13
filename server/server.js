@@ -32,3 +32,24 @@ boot(app, __dirname, function(err) {
   if (require.main === module)
     app.start();
 });
+
+console.log(Object.keys(app.models));
+
+app.models.user.afterRemote("create", (ctx, user, next) => {
+  console.log("the new user is: ", user);
+  app.models.Profile.create({
+    first_name: user.first_name,
+    created_at: new Date(),
+    userId: user.id,
+    last_name: user.last_name,
+    birth_date: user.dateOfBirth,
+    age: user.age
+  }, (err, result) => {
+    if(!err && result){
+      console.log("Created new profile!: ", result);
+    }else {
+      console.log("There is an error: ", err);
+    }
+    next();
+  });
+});
