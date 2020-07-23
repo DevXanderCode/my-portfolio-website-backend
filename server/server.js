@@ -67,3 +67,27 @@ app.models.user.afterRemote("create", (ctx, user, next) => {
     next();
   });
 });
+
+app.models.Role.find({where: {name: "admin"}}, (err, role) => {
+  if (!err && role){
+    console.log("No error, Role is: ", role);
+    if (role.length === 0){
+      app.models.Role.create({
+        name: "admin",
+      }, (error, result) => {
+        if(!error && result){
+          app.models.user.findOne((userErr, user) => {
+            if(!userErr && user){
+              result.principals.create({
+                principalType: app.models.RoleMapping.USER,
+                principalId: user.id,
+              }, (principalErr, principal) => {
+                console.log("created principal", principalErr, principal)
+              });
+            }
+          });
+        }
+      });
+    }
+  }
+});
