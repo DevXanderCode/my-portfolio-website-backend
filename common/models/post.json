@@ -44,6 +44,12 @@
       "principalType": "ROLE",
       "principalId": "admin",
       "permission": "ALLOW"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "editor",
+      "permission": "ALLOW"
     }
   ],
   "methods": {}
