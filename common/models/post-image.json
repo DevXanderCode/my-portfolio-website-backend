@@ -1,18 +1,12 @@
 {
-  "name": "Post",
+  "name": "PostImage",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "title": {
-      "type": "string"
-    },
-    "slug": {
-      "type": "string"
-    },
-    "content": {
+    "url": {
       "type": "string"
     },
     "created_at": {
@@ -21,25 +15,15 @@
   },
   "validations": [],
   "relations": {
+    "Post": {
+      "type": "belongsTo",
+      "model": "Post",
+      "foreignKey": "postId"
+    },
     "user": {
       "type": "belongsTo",
       "model": "user",
       "foreignKey": "userId"
-    },
-    "Profile": {
-      "type": "belongsTo",
-      "model": "Profile",
-      "foreignKey": "profileId"
-    },
-    "Category": {
-      "type": "belongsTo",
-      "model": "Category",
-      "foreignKey": "categoryId"
-    },
-    "PostImage": {
-      "type": "hasMany",
-      "model": "PostImage",
-      "foreignKey": ""
     }
   },
   "acls": [
