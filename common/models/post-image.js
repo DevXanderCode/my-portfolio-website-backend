@@ -2,7 +2,7 @@
 const sharp = require('sharp');
 const fs = require('fs');
 
-const CONTAINER_URL = '/api/containers/';
+const CONTAINER_URL = '/api/ImageFiles/';
 
 module.exports = function(PostImage) {
 	PostImage.upload = function(ctx, options, access_token, post_id, user_id, cb) {
@@ -13,19 +13,27 @@ module.exports = function(PostImage) {
 			fs.mkdirSync(`./server/storage/${ctx.req.params.container}`);
 		}
 
+		PostImage.find({ where: { postId: post_id } }, (fer, files) => {
+			if (!fer && files) {
+				files.map((fil) => {
+					fil.updateAttributes({ postId: null });
+				});
+			}
+		});
+
 		PostImage.app.models.ImageFile.upload(ctx.req, ctx.results, options, (err, file) => {
 			if (err) {
 				cb(err);
 			} else {
 				let fileInfo = file.files.file[0];
 
-				sharp(`./server/storage/${ctx.req.params.container}/${fileInfo.name}`)
+				sharp('./server/storage/' + ctx.req.params.container + '/' + fileInfo.name)
 					.resize(100)
 					.toFile('./server/storage/' + ctx.req.params.container + '/100-' + fileInfo.name, (err) => {
 						if (!err) {
 							PostImage.create(
 								{
-									url: CONTAINER_URL + fileInfo.container + '/download/' + 'fileInfo.name',
+									url: CONTAINER_URL + fileInfo.container + '/download/' + fileInfo.name,
 									thubnail: `${CONTAINER_URL}${fileInfo.container}/download/100-${fileInfo.name}`,
 									created_at: new Date(),
 									postId: post_id,
