@@ -93,6 +93,7 @@ app.models.Role.find({ where: { name: 'admin' } }, (err, role) => {
 										console.log('created principal', principalErr, principal);
 									}
 								);
+								console.log('logging user: ', user);
 							}
 						});
 					}
