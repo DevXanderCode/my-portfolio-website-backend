@@ -34,7 +34,7 @@ module.exports = function(PostImage) {
 							PostImage.create(
 								{
 									url: CONTAINER_URL + fileInfo.container + '/download/' + fileInfo.name,
-									thubnail: `${CONTAINER_URL}${fileInfo.container}/download/100-${fileInfo.name}`,
+									thumbnail: `${CONTAINER_URL}${fileInfo.container}/download/100-${fileInfo.name}`,
 									created_at: new Date(),
 									postId: post_id,
 									userId: user_id
